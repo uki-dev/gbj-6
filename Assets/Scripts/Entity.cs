@@ -5,8 +5,15 @@ using UnityEngine;
 public class Entity : MonoBehaviour
 {
   public int health;
-  public int damage;
-  public float speed;
+
+  public float walkSpeed;
+
+  public int attackDamage;
+  public float attackSpeed;
+  public float attackCooldown;
+
+  protected bool canAttack = true;
+  protected bool attacking;
 
   void Awake()
   {
@@ -17,13 +24,36 @@ public class Entity : MonoBehaviour
     rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
   }
 
-  protected void Update()
+  protected virtual IEnumerator Attack()
   {
     Animator animator = GetComponent<Animator>();
-    SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+    animator.SetFloat("Attack Speed", 1f / attackSpeed);
+    animator.SetTrigger("Attacking");
+
+    attacking = true;
+    canAttack = false;
+    yield return new WaitForSeconds(attackSpeed);
+    attacking = false;
+    yield return new WaitForSeconds(attackCooldown - attackSpeed);
+    canAttack = true;
+  }
+
+  protected void Walk(Vector2 direction)
+  {
     Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
+    rigidbody.MovePosition(rigidbody.position + direction * walkSpeed * Time.deltaTime);
 
-    Vector2 direction = rigidbody.velocity.normalized;
+    Animator animator = GetComponent<Animator>();
+    bool walking = direction != Vector2.zero;
+    animator.SetBool("Walking", walking);
+    if (walking)
+    {
+      animator.SetFloat("Walk Speed", walkSpeed / 32);
+      animator.SetFloat("Direction X", direction.x);
+      animator.SetFloat("Direction Y", direction.y);
 
+      SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+      spriteRenderer.flipX = direction.x < 0;
+    }
   }
 }

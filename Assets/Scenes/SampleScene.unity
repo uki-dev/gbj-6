@@ -3568,12 +3568,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03fec4ad3d39bf241810b57aeaf52629, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
-  damage: 0
-  speed: 48
+  health: 100
+  walkSpeed: 48
+  attackDamage: 0
   attackSpeed: 0.25
   attackCooldown: 0.5
-  canAttack: 1
 --- !u!50 &368287329
 Rigidbody2D:
   serializedVersion: 4
@@ -3678,7 +3677,7 @@ Animator:
   m_GameObject: {fileID: 368287327}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 5d1289ee9be9d8442af4a4c0a2c21cec, type: 2}
+  m_Controller: {fileID: 22100000, guid: d7036bb4fb98ad241895c177d9e6ef0e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -3757,9 +3756,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.08858204
+    y: 0.15935156
     width: 1
-    height: 0.8228359
+    height: 0.6812969
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -3793,6 +3792,57 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &592209635
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4446213583767836, guid: 53117b4549e182a44a724abd193a76f8, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 47.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 4446213583767836, guid: 53117b4549e182a44a724abd193a76f8, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -72
+      objectReference: {fileID: 0}
+    - target: {fileID: 4446213583767836, guid: 53117b4549e182a44a724abd193a76f8, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4446213583767836, guid: 53117b4549e182a44a724abd193a76f8, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4446213583767836, guid: 53117b4549e182a44a724abd193a76f8, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4446213583767836, guid: 53117b4549e182a44a724abd193a76f8, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4446213583767836, guid: 53117b4549e182a44a724abd193a76f8, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4446213583767836, guid: 53117b4549e182a44a724abd193a76f8, type: 2}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114784190349458528, guid: 53117b4549e182a44a724abd193a76f8,
+        type: 2}
+      propertyPath: range
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 1730305603753638, guid: 53117b4549e182a44a724abd193a76f8, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 53117b4549e182a44a724abd193a76f8, type: 2}
+  m_IsPrefabAsset: 0
 --- !u!1 &707322835
 GameObject:
   m_ObjectHideFlags: 0
@@ -3922,29 +3972,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &832984540 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1408463567579490, guid: 519238278bf5b464dbdaa01e5885b0ff,
-    type: 2}
-  m_PrefabInternal: {fileID: 1777856314}
---- !u!95 &832984541
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 832984540}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6e5724ccf986dc3458d2c29ebbf1f60a, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &928078014
 GameObject:
   m_ObjectHideFlags: 0
@@ -4240,7 +4267,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4406872190676382, guid: 519238278bf5b464dbdaa01e5885b0ff, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 62.07
+      value: 21.05
       objectReference: {fileID: 0}
     - target: {fileID: 4406872190676382, guid: 519238278bf5b464dbdaa01e5885b0ff, type: 2}
       propertyPath: m_LocalPosition.y
@@ -4270,6 +4297,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 114891575638271548, guid: 519238278bf5b464dbdaa01e5885b0ff,
+        type: 2}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 368287333}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 519238278bf5b464dbdaa01e5885b0ff, type: 2}
   m_IsPrefabAsset: 0

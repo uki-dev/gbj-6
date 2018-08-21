@@ -13,14 +13,9 @@ public class Enemy : Entity
     if (target)
     {
       if (Vector3.Distance(transform.position, target.position) > range)
-      {
-        rigidbody.velocity = (target.position - transform.position).normalized * speed;
-      }
+        Walk((target.position - transform.position).normalized);
       else
-      {
-        rigidbody.velocity = Vector3.zero;
-        // attack
-      }
+        Attack();
     }
   }
 }

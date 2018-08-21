@@ -5,12 +5,12 @@ AnimatorOverrideController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Zombie
+  m_Name: Mage
   m_Controller: {fileID: 9100000, guid: 95a38ee3ed2a50f4483278368db4dc79, type: 2}
   m_Clips:
   - m_OriginalClip: {fileID: 7400000, guid: 98bb2c8ae35770e4d8e1376fa7ecdf94, type: 2}
-    m_OverrideClip: {fileID: 7400000, guid: 860d102b4cfc0704fb3ac512ac95ff55, type: 2}
-  - m_OriginalClip: {fileID: 7400000, guid: 3fef25e939ad52046baef45dc78f1197, type: 2}
-    m_OverrideClip: {fileID: 7400000, guid: b11ab30f750026f45a24a78d156d1e4f, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 306d7546ad0d604448a6ae269e9c6fd6, type: 2}
   - m_OriginalClip: {fileID: 7400000, guid: dbe6a11a2eda1ca43b039c4dcf02e176, type: 2}
-    m_OverrideClip: {fileID: 7400000, guid: a67ab0aebbd481740abfe084c3f59683, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 10e5e1a2820af0d47aec578b56ef2816, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 3fef25e939ad52046baef45dc78f1197, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: d6a2c3d41637905419c6fbba03266bf2, type: 2}
