@@ -43,19 +43,16 @@ public class Game : MonoBehaviour
   {
     while (true)
     {
-      if (shopping)
+      yield return StartCoroutine(Wave());
+      if (wave > 0 && wave % 4 == 0)
       {
-        yield return null;
-      }
-      else
-      {
-        yield return StartCoroutine(Wave());
-        wave++;
-        if (wave > 0 && wave % 5 == 0)
+        shopping = true;
+        while (shopping)
         {
-          shopping = true;
+          yield return null;
         }
       }
+      wave++;
     }
   }
 
