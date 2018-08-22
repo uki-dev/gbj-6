@@ -24,28 +24,36 @@ public class Game : MonoBehaviour
   public float enemyHealthScale;
   public float enemyDamageScale;
 
-  [HideInInspector]
-  public bool openShop;
+  public bool shopping
+  {
+    get
+    {
+      return _shopping;
+    }
+    set
+    {
+      _shopping = value;
+      staircase.opened = value;
+    }
+  }
+  bool _shopping;
   public Staircase staircase;
 
   IEnumerator Start()
   {
     while (true)
     {
-      if (openShop)
+      if (shopping)
       {
         yield return null;
       }
       else
       {
         yield return StartCoroutine(Wave());
-
         wave++;
         if (wave > 0 && wave % 5 == 0)
         {
-
-          openShop = true;
-          staircase.opened = true;
+          shopping = true;
         }
       }
     }
@@ -87,7 +95,6 @@ public class Game : MonoBehaviour
       if (end) break;
       yield return null;
     }
-
     //yield return new WaitForSeconds(waveTimer);
   }
 
