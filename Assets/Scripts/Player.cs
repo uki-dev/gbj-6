@@ -8,7 +8,7 @@ public class Player : Character
 
   protected override void Update()
   {
-    if (Input.GetKeyDown(KeyCode.Z) && canAttack)
+    if (canAttack && Input.GetButtonDown("A"))
     {
       StartCoroutine(Attack());
     }
@@ -16,16 +16,8 @@ public class Player : Character
     walking = false;
     if (!attacking)
     {
-      Vector2 direction = Vector2.zero;
-      if (Input.GetKey(KeyCode.UpArrow))
-        direction.y += 1;
-      if (Input.GetKey(KeyCode.DownArrow))
-        direction.y -= 1;
-      if (Input.GetKey(KeyCode.LeftArrow))
-        direction.x -= 1;
-      if (Input.GetKey(KeyCode.RightArrow))
-        direction.x += 1;
-
+      Vector2 direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+      direction.Normalize();
       if (direction != Vector2.zero)
       {
         this.direction = direction;
@@ -37,16 +29,13 @@ public class Player : Character
 
   void OnTriggerEnter2D(Collider2D collider)
   {
-    if (collider.tag != gameObject.tag)
+    Enemy enemy = collider.GetComponent<Enemy>();
+    if (enemy)
     {
-      Entity entity = collider.GetComponent<Entity>();
-      if (entity)
-      {
-        entity.Damage(attackDamage);
-        Rigidbody2D rigidbody = entity.GetComponent<Rigidbody2D>();
-        Vector2 normal = (entity.transform.position - transform.position).normalized;
-        rigidbody.MovePosition(rigidbody.position + normal * knockback);
-      }
+      enemy.Damage(attackDamage);
+      Rigidbody2D rigidbody = enemy.GetComponent<Rigidbody2D>();
+      Vector2 normal = (enemy.transform.position - transform.position).normalized;
+      rigidbody.MovePosition(rigidbody.position + normal * knockback);
     }
   }
 }

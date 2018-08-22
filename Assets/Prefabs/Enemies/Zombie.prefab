@@ -119,11 +119,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 2
+  healthMax: 0
   walkSpeed: 16
   attackDamage: 2
   attackSpeed: 1
   attackCooldown: 1
   knockback: 16
+  walking: 0
+  direction: {x: 0, y: 0}
+  attacking: 0
+  canAttack: 1
   target: {fileID: 0}
   range: 16
   gold: {fileID: 1240033192982984, guid: 4aba463a7ea83cf45947488bd8658f76, type: 2}
@@ -164,8 +169,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 395082975
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: ee1a3d2faab3f28458aded833c60b4a5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

@@ -57,16 +57,13 @@ public class Enemy : Character
 
   void OnCollisionEnter2D(Collision2D collision)
   {
-    if (collision.collider.tag != gameObject.tag)
+    Player player = collision.collider.GetComponent<Player>();
+    if (player)
     {
-      Entity entity = collision.collider.GetComponent<Entity>();
-      if (entity)
-      {
-        entity.Damage(attackDamage);
-        Rigidbody2D rigidbody = entity.GetComponent<Rigidbody2D>();
-        Vector2 normal = (entity.transform.position - transform.position).normalized;
-        rigidbody.MovePosition(rigidbody.position + normal * knockback);
-      }
+      player.Damage(attackDamage);
+      Rigidbody2D rigidbody = player.GetComponent<Rigidbody2D>();
+      Vector2 normal = (player.transform.position - transform.position).normalized;
+      rigidbody.MovePosition(rigidbody.position + normal * knockback);
     }
   }
 }

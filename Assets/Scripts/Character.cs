@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Character : Entity
 {
+  public int health;
+  public int healthMax;
+
   public float walkSpeed;
 
   public int attackDamage;
@@ -12,13 +15,17 @@ public class Character : Entity
 
   public float knockback;
 
-  protected bool walking;
-  protected Vector2 direction;
+  [HideInInspector]
+  public bool walking;
+  [HideInInspector]
+  public Vector2 direction;
 
-  protected bool attacking;
-  protected bool canAttack = true;
+  [HideInInspector]
+  public bool attacking;
+  [HideInInspector]
+  public bool canAttack = true;
 
-  protected virtual void Update()
+  protected override void Update()
   {
     Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
     if (walking)
@@ -35,7 +42,10 @@ public class Character : Entity
     animator.SetFloat("Walk Speed", walkSpeed / 32);
     animator.SetFloat("Direction X", direction.x);
     animator.SetFloat("Direction Y", direction.y);
+
     transform.localScale = new Vector3(direction.x > 0 ? 1f : -1f, 1f, 1f);
+
+    base.Update();
   }
 
   protected virtual IEnumerator Attack()
@@ -54,14 +64,23 @@ public class Character : Entity
     canAttack = true;
   }
 
-  public override void Damage(int amount)
+  public void Damage(int amount)
   {
-    base.Damage(amount);
+    health = Mathf.Clamp(health - amount, 0, healthMax);
+    if (health == 0)
+    {
+      Die();
+    }
 
     if (amount > 0)
     {
       Animator animator = GetComponent<Animator>();
       animator.SetTrigger("Damaged");
     }
+  }
+
+  public virtual void Die()
+  {
+    Destroy(gameObject);
   }
 }

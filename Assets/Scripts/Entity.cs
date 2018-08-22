@@ -4,17 +4,9 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
-  public int health;
-
-  public virtual void Damage(int amount)
+  protected virtual void Update()
   {
-    health = Mathf.Clamp(health - amount, 0, int.MaxValue);
-    if (health <= 0)
-      Die();
-  }
-
-  public virtual void Die()
-  {
-    Destroy(gameObject);
+    SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+    spriteRenderer.sortingOrder = Mathf.RoundToInt(transform.position.y) * -1;
   }
 }
