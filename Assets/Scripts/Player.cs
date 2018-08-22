@@ -9,7 +9,9 @@ public class Player : Character
   protected override void Update()
   {
     if (Input.GetKeyDown(KeyCode.Z) && canAttack)
+    {
       StartCoroutine(Attack());
+    }
 
     walking = false;
     if (!attacking)

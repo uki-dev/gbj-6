@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class Enemy : Character
 {
+  const float boneDecay = 5f;
+
   [HideInInspector]
   public Player target;
   public float range;
 
+  public GameObject gold;
   public GameObject[] bones;
 
   void Start()
@@ -24,11 +27,12 @@ public class Enemy : Character
       {
         Vector2 normal = (target.transform.position - transform.position).normalized;
         direction = Utility.Direction(normal);
-
         walking = true;
       }
       else if (canAttack)
+      {
         StartCoroutine(Attack());
+      }
     }
     else
     {
@@ -43,9 +47,11 @@ public class Enemy : Character
     base.Die();
     if (bones.Length > 0)
     {
-      GameObject prefab = this.bones[Random.Range(0, this.bones.Length)];
-      GameObject bones = Instantiate(prefab, transform.position, Quaternion.identity);
-      // Destroy(bones, boneDecay);
+      GameObject gold = Instantiate(this.gold, transform.position, Quaternion.identity);
+
+      GameObject bonesPrefab = this.bones[Random.Range(0, this.bones.Length)];
+      GameObject bones = Instantiate(bonesPrefab, transform.position, Quaternion.identity);
+      Destroy(bones, boneDecay);
     }
   }
 

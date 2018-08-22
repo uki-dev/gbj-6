@@ -12,7 +12,9 @@ public class Projectile : MonoBehaviour
     {
       Entity entity = collider.GetComponent<Entity>();
       if (entity)
+      {
         entity.Damage(damage);
+      }
     }
   }
 }

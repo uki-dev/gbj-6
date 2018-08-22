@@ -33,7 +33,9 @@ public class Game : MonoBehaviour
     while (true)
     {
       if (openShop)
+      {
         yield return null;
+      }
       else
       {
         yield return StartCoroutine(Wave());
@@ -88,9 +90,13 @@ public class Game : MonoBehaviour
     foreach (Spawn spawn in spawns)
     {
       if (value <= spawn.probability)
+      {
         return spawn.enemy;
+      }
       else
+      {
         value -= spawn.probability;
+      }
     }
     return null;
   }

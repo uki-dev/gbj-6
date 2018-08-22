@@ -22,9 +22,13 @@ public class Character : Entity
   {
     Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
     if (walking)
+    {
       rigidbody.velocity = direction * walkSpeed;
+    }
     else
+    {
       rigidbody.velocity = Vector2.zero;
+    }
 
     Animator animator = GetComponent<Animator>();
     animator.SetBool("Walking", walking);
