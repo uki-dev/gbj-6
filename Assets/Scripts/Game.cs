@@ -26,7 +26,7 @@ public class Game : MonoBehaviour
 
   [HideInInspector]
   public bool openShop;
-  public GameObject staircase;
+  public Staircase staircase;
 
   IEnumerator Start()
   {
@@ -43,8 +43,9 @@ public class Game : MonoBehaviour
         wave++;
         if (wave > 0 && wave % 5 == 0)
         {
+
           openShop = true;
-          staircase.SetActive(true);
+          staircase.opened = true;
         }
       }
     }
@@ -52,7 +53,8 @@ public class Game : MonoBehaviour
 
   IEnumerator Wave()
   {
-    //show timer
+    yield return new WaitForSeconds(waveTimer);
+
     int enemyCount = Mathf.FloorToInt(enemyCountBase * Mathf.Pow(enemyCountScale, wave));
     Enemy[] enemies = new Enemy[enemyCount];
     for (int i = 0; i < enemyCount; i++)
@@ -75,7 +77,18 @@ public class Game : MonoBehaviour
       enemies[i] = enemy;
     }
 
-    yield return new WaitForSeconds(waveTimer);
+    while (true)
+    {
+      bool end = true;
+      foreach (Enemy enemy in enemies)
+      {
+        if (enemy) end = false;
+      }
+      if (end) break;
+      yield return null;
+    }
+
+    //yield return new WaitForSeconds(waveTimer);
   }
 
   Enemy RandomEnemy()

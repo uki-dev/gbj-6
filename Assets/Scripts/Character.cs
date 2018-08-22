@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Character : Entity
 {
+  [HideInInspector]
   public int health;
   public int healthMax;
 
@@ -24,6 +25,11 @@ public class Character : Entity
   public bool attacking;
   [HideInInspector]
   public bool canAttack = true;
+
+  protected virtual void Start()
+  {
+    health = healthMax;
+  }
 
   protected override void Update()
   {

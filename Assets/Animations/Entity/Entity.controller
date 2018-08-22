@@ -459,7 +459,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Damaged
-  m_Speed: 2
+  m_Speed: 4
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1101865353813836592}
@@ -474,10 +474,10 @@ AnimatorState:
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: 2ba09d339c0bef749a159ef46d1da8dc, type: 2}
   m_Tag: 
-  m_SpeedParameter: 
+  m_SpeedParameter: Walk Speed
   m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
+  m_CycleOffsetParameter: Walk Speed
+  m_TimeParameter: Walk Speed
 --- !u!1102 &1102648096968633988
 AnimatorState:
   serializedVersion: 5

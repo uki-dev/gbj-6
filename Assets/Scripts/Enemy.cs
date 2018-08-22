@@ -11,9 +11,10 @@ public class Enemy : Character
   public GameObject gold;
   public GameObject[] bones;
 
-  void Start()
+  protected override void Start()
   {
     target = FindObjectOfType<Player>();
+    base.Start();
   }
 
   protected override void Update()

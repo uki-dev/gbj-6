@@ -6,10 +6,13 @@ public class Player : Character
 {
   public int gold;
 
+  List<Enemy> hits;
+
   protected override void Update()
   {
     if (canAttack && Input.GetButtonDown("A"))
     {
+      hits = new List<Enemy>();
       StartCoroutine(Attack());
     }
 
@@ -29,13 +32,17 @@ public class Player : Character
 
   void OnTriggerEnter2D(Collider2D collider)
   {
-    Enemy enemy = collider.GetComponent<Enemy>();
-    if (enemy)
+    if (attacking)
     {
-      enemy.Damage(attackDamage);
-      Rigidbody2D rigidbody = enemy.GetComponent<Rigidbody2D>();
-      Vector2 normal = (enemy.transform.position - transform.position).normalized;
-      rigidbody.MovePosition(rigidbody.position + normal * knockback);
+      Enemy enemy = collider.GetComponent<Enemy>();
+      if (enemy && !hits.Contains(enemy))
+      {
+        enemy.Damage(attackDamage);
+        Rigidbody2D rigidbody = enemy.GetComponent<Rigidbody2D>();
+        Vector2 normal = (enemy.transform.position - transform.position).normalized;
+        rigidbody.MovePosition(rigidbody.position + normal * knockback);
+        hits.Add(enemy);
+      }
     }
   }
 }

@@ -1,9 +1,9 @@
 fileFormatVersion: 2
-guid: 9017fc168bf4cdd49870065001d6743a
+guid: e4eb2dfb62089e54b9bf4b1bff5e2cb1
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Gold_0
-    21300002: Gold_1
+    21300000: Staircase_0
+    21300002: Staircase_1
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Gold_0
+      name: Staircase_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 8
-        height: 8
+        y: 16
+        width: 32
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -111,19 +111,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 34b9b2ae66c75b24bbc43fbab31c6ba1
+      spriteID: e6edcedc74d66cc48a9078a4d65ce8c4
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Gold_1
+      name: Staircase_1
       rect:
         serializedVersion: 2
-        x: 8
+        x: 0
         y: 0
-        width: 8
-        height: 8
+        width: 32
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,7 +131,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ae7e2f99d2950b148ae2a7e6505016ee
+      spriteID: fdbc1f4f04f503947979652043e91411
       vertices: []
       indices: 
       edges: []
@@ -139,7 +139,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 3991a42a3a054c4438a41b3b89e41997
+    spriteID: 48f976d5daf051f44b22036f330f1e08
     vertices: []
     indices: 
     edges: []
