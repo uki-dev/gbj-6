@@ -126,6 +126,7 @@ MonoBehaviour:
   knockback: 16
   target: {fileID: 0}
   range: 16
+  gold: {fileID: 1240033192982984, guid: 4aba463a7ea83cf45947488bd8658f76, type: 2}
   bones:
   - {fileID: 1913133860875858, guid: a6a405214c2b5f544b59b365aa9275d1, type: 2}
   - {fileID: 1156290405546358, guid: 7e0dd285b45283345b51d77656c5940d, type: 2}

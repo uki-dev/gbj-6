@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Enemy : Character
 {
-  const float boneDecay = 5f;
-
   [HideInInspector]
   public Player target;
   public float range;
@@ -45,13 +43,15 @@ public class Enemy : Character
   public override void Die()
   {
     base.Die();
-    if (bones.Length > 0)
+    if (gold)
     {
-      GameObject gold = Instantiate(this.gold, transform.position, Quaternion.identity);
-
-      GameObject bonesPrefab = this.bones[Random.Range(0, this.bones.Length)];
-      GameObject bones = Instantiate(bonesPrefab, transform.position, Quaternion.identity);
-      Destroy(bones, boneDecay);
+      /*
+      SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+      position.x += Mathf.Round((Random.value - 0.5f) * 8);
+      position.y -= spriteRenderer.bounds.extents.y - 2;
+      */
+      Vector3 position = transform.position;
+      GameObject gold = Instantiate(this.gold, position, Quaternion.identity);
     }
   }
 

@@ -12,6 +12,7 @@ public class Gold : MonoBehaviour
     if (player)
     {
       player.gold += amount;
+      Destroy(gameObject);
     }
   }
 }
