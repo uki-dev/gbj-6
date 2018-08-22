@@ -123,6 +123,8 @@ MonoBehaviour:
   attackDamage: 0
   attackSpeed: 0
   attackCooldown: 0
+  knockback: 0
+  bones: []
   target: {fileID: 0}
   range: 0
 --- !u!212 &212404007016654898

@@ -3570,9 +3570,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   walkSpeed: 48
-  attackDamage: 0
+  attackDamage: 20
   attackSpeed: 0.25
   attackCooldown: 0.5
+  knockback: 16
 --- !u!50 &368287329
 Rigidbody2D:
   serializedVersion: 4
@@ -3696,7 +3697,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 80, y: -72, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1468414629}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3756,9 +3758,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.15935156
+    y: 0.15795067
     width: 1
-    height: 0.6812969
+    height: 0.68409866
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -3839,6 +3841,10 @@ Prefab:
     - target: {fileID: 1730305603753638, guid: 53117b4549e182a44a724abd193a76f8, type: 2}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1730305603753638, guid: 53117b4549e182a44a724abd193a76f8, type: 2}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 53117b4549e182a44a724abd193a76f8, type: 2}
@@ -4150,6 +4156,73 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1468414628
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1468414629}
+  - component: {fileID: 1468414630}
+  - component: {fileID: 1468414631}
+  m_Layer: 0
+  m_Name: Attack Trigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1468414629
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1468414628}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 368287333}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1468414630
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1468414628}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 16, y: 16}
+  m_EdgeRadius: 0
+--- !u!114 &1468414631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1468414628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e11bee3e0271ac4899dbae07ddfe0d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parent: {fileID: 368287328}
 --- !u!1 &1548884745
 GameObject:
   m_ObjectHideFlags: 0
@@ -4265,6 +4338,16 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114891575638271548, guid: 519238278bf5b464dbdaa01e5885b0ff,
+        type: 2}
+      propertyPath: bones.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114891575638271548, guid: 519238278bf5b464dbdaa01e5885b0ff,
+        type: 2}
+      propertyPath: corpses.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4406872190676382, guid: 519238278bf5b464dbdaa01e5885b0ff, type: 2}
       propertyPath: m_LocalPosition.x
       value: 21.05
@@ -4302,6 +4385,68 @@ Prefab:
       propertyPath: target
       value: 
       objectReference: {fileID: 368287333}
+    - target: {fileID: 114891575638271548, guid: 519238278bf5b464dbdaa01e5885b0ff,
+        type: 2}
+      propertyPath: walkSpeed
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 1408463567579490, guid: 519238278bf5b464dbdaa01e5885b0ff, type: 2}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 114891575638271548, guid: 519238278bf5b464dbdaa01e5885b0ff,
+        type: 2}
+      propertyPath: health
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 114891575638271548, guid: 519238278bf5b464dbdaa01e5885b0ff,
+        type: 2}
+      propertyPath: bones.Array.data[4]
+      value: 
+      objectReference: {fileID: 1913133860875858, guid: a6a405214c2b5f544b59b365aa9275d1,
+        type: 2}
+    - target: {fileID: 114891575638271548, guid: 519238278bf5b464dbdaa01e5885b0ff,
+        type: 2}
+      propertyPath: bones.Array.data[5]
+      value: 
+      objectReference: {fileID: 1156290405546358, guid: 7e0dd285b45283345b51d77656c5940d,
+        type: 2}
+    - target: {fileID: 114891575638271548, guid: 519238278bf5b464dbdaa01e5885b0ff,
+        type: 2}
+      propertyPath: bones.Array.data[6]
+      value: 
+      objectReference: {fileID: 1737298091377910, guid: 2d5eab549b794f64f8371169451cf44a,
+        type: 2}
+    - target: {fileID: 114891575638271548, guid: 519238278bf5b464dbdaa01e5885b0ff,
+        type: 2}
+      propertyPath: bones.Array.data[7]
+      value: 
+      objectReference: {fileID: 1201702523020732, guid: 293bfbdd3562c664c87fcfc560d17c48,
+        type: 2}
+    - target: {fileID: 114891575638271548, guid: 519238278bf5b464dbdaa01e5885b0ff,
+        type: 2}
+      propertyPath: bones.Array.data[0]
+      value: 
+      objectReference: {fileID: 1913133860875858, guid: a6a405214c2b5f544b59b365aa9275d1,
+        type: 2}
+    - target: {fileID: 114891575638271548, guid: 519238278bf5b464dbdaa01e5885b0ff,
+        type: 2}
+      propertyPath: bones.Array.data[1]
+      value: 
+      objectReference: {fileID: 1156290405546358, guid: 7e0dd285b45283345b51d77656c5940d,
+        type: 2}
+    - target: {fileID: 114891575638271548, guid: 519238278bf5b464dbdaa01e5885b0ff,
+        type: 2}
+      propertyPath: bones.Array.data[2]
+      value: 
+      objectReference: {fileID: 1737298091377910, guid: 2d5eab549b794f64f8371169451cf44a,
+        type: 2}
+    - target: {fileID: 114891575638271548, guid: 519238278bf5b464dbdaa01e5885b0ff,
+        type: 2}
+      propertyPath: bones.Array.data[3]
+      value: 
+      objectReference: {fileID: 1201702523020732, guid: 293bfbdd3562c664c87fcfc560d17c48,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 519238278bf5b464dbdaa01e5885b0ff, type: 2}
   m_IsPrefabAsset: 0
