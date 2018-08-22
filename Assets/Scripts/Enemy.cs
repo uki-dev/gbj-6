@@ -2,24 +2,40 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : Entity
+public class Enemy : Character
 {
-  public GameObject[] bones;
-
   [HideInInspector]
-  public Transform target;
+  public Player target;
   public float range;
 
-  void Update()
+  public GameObject[] bones;
+
+  void Start()
   {
-    Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
+    target = FindObjectOfType<Player>();
+  }
+
+  protected override void Update()
+  {
+    walking = false;
     if (target)
     {
-      if (Vector3.Distance(transform.position, target.position) > range)
-        Walk((target.position - transform.position).normalized);
-      else
-        Attack();
+      if (Vector3.Distance(transform.position, target.transform.position) > range)
+      {
+        Vector2 normal = (target.transform.position - transform.position).normalized;
+        direction = Utility.Direction(normal);
+
+        walking = true;
+      }
+      else if (canAttack)
+        StartCoroutine(Attack());
     }
+    else
+    {
+      Animator animator = GetComponent<Animator>();
+      animator.StopPlayback();
+    }
+    base.Update();
   }
 
   public override void Die()
@@ -39,7 +55,12 @@ public class Enemy : Entity
     {
       Entity entity = collision.collider.GetComponent<Entity>();
       if (entity)
-        entity.Damage(attackDamage, this);
+      {
+        entity.Damage(attackDamage);
+        Rigidbody2D rigidbody = entity.GetComponent<Rigidbody2D>();
+        Vector2 normal = (entity.transform.position - transform.position).normalized;
+        rigidbody.MovePosition(rigidbody.position + normal * knockback);
+      }
     }
   }
 }

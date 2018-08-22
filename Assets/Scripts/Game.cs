@@ -11,6 +11,9 @@ public class Game : MonoBehaviour
     public float probability;
   }
 
+  public int wave;
+  public float waveTimer;
+
   public Spawn[] spawns;
 
   public BoxCollider2D[] spawnAreas;
@@ -21,15 +24,35 @@ public class Game : MonoBehaviour
   public float enemyHealthScale;
   public float enemyDamageScale;
 
-  public int wave;
+  [HideInInspector]
+  public bool openShop;
+  public GameObject staircase;
 
-  void Start()
+  IEnumerator Start()
   {
-    StartWave();
+    while (true)
+    {
+      if (openShop)
+        yield return null;
+      else
+      {
+        yield return StartCoroutine(Wave());
+
+        wave++;
+        if (wave > 0 && wave % 5 == 0)
+        {
+          openShop = true;
+          staircase.SetActive(true);
+        }
+      }
+    }
   }
-  void StartWave()
+
+  IEnumerator Wave()
   {
+    //show timer
     int enemyCount = Mathf.FloorToInt(enemyCountBase * Mathf.Pow(enemyCountScale, wave));
+    Enemy[] enemies = new Enemy[enemyCount];
     for (int i = 0; i < enemyCount; i++)
     {
       Enemy enemy = Instantiate(RandomEnemy().gameObject).GetComponent<Enemy>();
@@ -47,9 +70,10 @@ public class Game : MonoBehaviour
           break;
         }
       }
-
-      enemy.target = FindObjectOfType<Player>().transform;
+      enemies[i] = enemy;
     }
+
+    yield return new WaitForSeconds(waveTimer);
   }
 
   Enemy RandomEnemy()

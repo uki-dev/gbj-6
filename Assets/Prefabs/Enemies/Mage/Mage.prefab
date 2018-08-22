@@ -20,13 +20,13 @@ GameObject:
   m_Component:
   - component: {fileID: 4446213583767836}
   - component: {fileID: 212404007016654898}
-  - component: {fileID: 61637559807296194}
   - component: {fileID: 50943287226456744}
-  - component: {fileID: 114784190349458528}
+  - component: {fileID: 61401505478239408}
   - component: {fileID: 95126098275915500}
+  - component: {fileID: 114241577055798440}
   m_Layer: 0
   m_Name: Mage
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -38,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1730305603753638}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 47.75, y: -72, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -64,7 +64,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &61637559807296194
+--- !u!61 &61401505478239408
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -76,7 +76,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.5, y: 0.5}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -87,7 +87,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 16, y: 16}
+  m_Size: {x: 11, y: 15}
   m_EdgeRadius: 0
 --- !u!95 &95126098275915500
 Animator:
@@ -107,7 +107,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &114784190349458528
+--- !u!114 &114241577055798440
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -115,18 +115,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 1730305603753638}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47331ec1d19c1fa4e9904a41d66d0e3b, type: 3}
+  m_Script: {fileID: 11500000, guid: 3299bdb45e6c87446affe59b75513d48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
-  walkSpeed: 0
-  attackDamage: 0
-  attackSpeed: 0
-  attackCooldown: 0
+  health: 2
+  walkSpeed: 64
+  attackDamage: 1
+  attackSpeed: 1
+  attackCooldown: 5
   knockback: 0
-  bones: []
   target: {fileID: 0}
-  range: 0
+  range: 128
+  bones:
+  - {fileID: 1913133860875858, guid: a6a405214c2b5f544b59b365aa9275d1, type: 2}
+  - {fileID: 1156290405546358, guid: 7e0dd285b45283345b51d77656c5940d, type: 2}
+  - {fileID: 1737298091377910, guid: 2d5eab549b794f64f8371169451cf44a, type: 2}
+  - {fileID: 1201702523020732, guid: 293bfbdd3562c664c87fcfc560d17c48, type: 2}
+  projectile: {fileID: 1146480523041486, guid: 7e1b924237660d246a710f2926af7f6e, type: 2}
+  projectileSpeed: 48
 --- !u!212 &212404007016654898
 SpriteRenderer:
   m_ObjectHideFlags: 1

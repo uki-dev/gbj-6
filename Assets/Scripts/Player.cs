@@ -2,10 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : Entity
+public class Player : Character
 {
-  void Update()
+  public int gold;
+
+  protected override void Update()
   {
+    if (Input.GetKeyDown(KeyCode.Z) && canAttack)
+      StartCoroutine(Attack());
+
+    walking = false;
     if (!attacking)
     {
       Vector2 direction = Vector2.zero;
@@ -18,10 +24,27 @@ public class Player : Entity
       if (Input.GetKey(KeyCode.RightArrow))
         direction.x += 1;
 
-      Walk(direction);
+      if (direction != Vector2.zero)
+      {
+        this.direction = direction;
+        walking = true;
+      }
     }
+    base.Update();
+  }
 
-    if (Input.GetKeyDown(KeyCode.Z) && canAttack)
-      StartCoroutine(Attack());
+  void OnTriggerEnter2D(Collider2D collider)
+  {
+    if (collider.tag != gameObject.tag)
+    {
+      Entity entity = collider.GetComponent<Entity>();
+      if (entity)
+      {
+        entity.Damage(attackDamage);
+        Rigidbody2D rigidbody = entity.GetComponent<Rigidbody2D>();
+        Vector2 normal = (entity.transform.position - transform.position).normalized;
+        rigidbody.MovePosition(rigidbody.position + normal * knockback);
+      }
+    }
   }
 }
