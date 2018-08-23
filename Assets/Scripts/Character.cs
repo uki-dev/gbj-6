@@ -85,7 +85,7 @@ public class Character : Entity
     }
   }
 
-  public virtual void Die()
+  protected virtual void Die()
   {
     Destroy(gameObject);
   }

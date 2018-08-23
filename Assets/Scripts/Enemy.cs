@@ -49,7 +49,7 @@ public class Enemy : Character
     base.Update();
   }
 
-  public override void Die()
+  protected override void Die()
   {
     base.Die();
     if (goldAmount > 0 && goldPrefab)

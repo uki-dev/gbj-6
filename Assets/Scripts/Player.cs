@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : Character
 {
@@ -27,7 +28,7 @@ public class Player : Character
     if (!attacking)
     {
       Vector2 direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-      direction.Normalize();
+      direction = Utility.Direction(direction.normalized);
       if (direction != Vector2.zero)
       {
         this.direction = direction;
@@ -35,6 +36,12 @@ public class Player : Character
       }
     }
     base.Update();
+  }
+
+  protected override void Die()
+  {
+    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    base.Die();
   }
 
   void OnTriggerEnter2D(Collider2D collider)
