@@ -4,7 +4,28 @@ using UnityEngine;
 
 public class Gold : MonoBehaviour
 {
-  public int amount;
+  public Sprite small;
+  public Sprite large;
+
+  public int amount
+  {
+    get
+    {
+      return _amount;
+    }
+    set
+    {
+      _amount = value;
+      GetComponent<SpriteRenderer>().sprite = (amount < 3) ? small : large;
+    }
+  }
+  [SerializeField]
+  int _amount;
+
+  void OnValidate()
+  {
+    amount = _amount;
+  }
 
   void OnTriggerEnter2D(Collider2D collider)
   {

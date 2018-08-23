@@ -5,35 +5,35 @@ using UnityEngine;
 public class Staircase : MonoBehaviour
 {
   [SerializeField]
-  private bool _opened;
+  private bool _open;
 
-  public Sprite open;
+  public Sprite opened;
   public Sprite closed;
 
   public Transform exit;
   public Transform exitRoom;
 
-  public bool opened
+  public bool open
   {
     get
     {
-      return _opened;
+      return _open;
     }
     set
     {
-      _opened = value;
-      GetComponent<SpriteRenderer>().sprite = (opened) ? open : closed;
+      _open = value;
+      GetComponent<SpriteRenderer>().sprite = (open) ? opened : closed;
     }
   }
 
   void OnValidate()
   {
-    opened = opened;
+    open = _open;
   }
 
   void OnTriggerEnter2D(Collider2D collider)
   {
-    if (opened)
+    if (open)
     {
       Player player = collider.GetComponent<Player>();
       if (player)

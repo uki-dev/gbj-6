@@ -8,12 +8,12 @@ public class Enemy : Character
   public Player target;
   public float range;
 
-  public GameObject gold;
-  public GameObject[] bones;
+  public int goldAmount;
+  public GameObject goldPrefab;
 
   protected override void Start()
   {
-    target = FindObjectOfType<Player>();
+    target = Player.instance;
     base.Start();
   }
 
@@ -44,7 +44,7 @@ public class Enemy : Character
   public override void Die()
   {
     base.Die();
-    if (gold)
+    if (goldAmount > 0 && goldPrefab)
     {
       /*
       SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
@@ -52,7 +52,9 @@ public class Enemy : Character
       position.y -= spriteRenderer.bounds.extents.y - 2;
       */
       Vector3 position = transform.position;
-      GameObject gold = Instantiate(this.gold, position, Quaternion.identity);
+      GameObject goldObject = Instantiate(this.goldPrefab, position, Quaternion.identity);
+      Gold gold = goldObject.GetComponent<Gold>();
+      gold.amount = goldAmount;
     }
   }
 

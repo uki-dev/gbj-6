@@ -1,9 +1,10 @@
 fileFormatVersion: 2
-guid: e4eb2dfb62089e54b9bf4b1bff5e2cb1
+guid: 3a5b78b7a5bc92c4f96e7d2889fd3264
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Staircase Opened
-    21300002: Staircase Closed
+    21300000: Health Upgrade
+    21300002: Damage Upgrade
+    21300004: Speed Upgrade
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -97,12 +98,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Staircase Opened
+      name: Health Upgrade
       rect:
         serializedVersion: 2
         x: 0
-        y: 16
-        width: 32
+        y: 0
+        width: 16
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -111,18 +112,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e6edcedc74d66cc48a9078a4d65ce8c4
+      spriteID: 9eaf5534daa7edc45bceca9a4df59b17
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Staircase Closed
+      name: Damage Upgrade
       rect:
         serializedVersion: 2
-        x: 0
+        x: 16
         y: 0
-        width: 32
+        width: 16
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -131,7 +132,27 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fdbc1f4f04f503947979652043e91411
+      spriteID: 4ce19e6cead516640973bff6270c1ae7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Speed Upgrade
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e17962ba62190a4f911adaec2aedae3
       vertices: []
       indices: 
       edges: []
@@ -139,7 +160,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 48f976d5daf051f44b22036f330f1e08
+    spriteID: e4f75eaa240e8c04089bc861578ed581
     vertices: []
     indices: 
     edges: []

@@ -2,8 +2,8 @@ fileFormatVersion: 2
 guid: 9017fc168bf4cdd49870065001d6743a
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Gold_0
-    21300002: Gold_1
+    21300000: Gold Small
+    21300002: Gold Large
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -97,7 +97,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Gold_0
+      name: Gold Small
       rect:
         serializedVersion: 2
         x: 0
@@ -105,7 +105,7 @@ TextureImporter:
         width: 8
         height: 8
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -117,7 +117,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Gold_1
+      name: Gold Large
       rect:
         serializedVersion: 2
         x: 8
@@ -125,7 +125,7 @@ TextureImporter:
         width: 8
         height: 8
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

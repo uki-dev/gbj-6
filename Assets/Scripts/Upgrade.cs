@@ -4,37 +4,65 @@ using UnityEngine;
 
 public class Upgrade : MonoBehaviour
 {
-  public enum Type { Damage, Speed, Health }
+  public enum Type { Health, Damage, Speed }
   public Type type;
-
   public float amount;
+  public int cost;
 
-  public void Purchase(Player player)
+  Player player;
+  bool triggered;
+
+  void Update()
   {
-    switch (type)
+    if (player)
     {
-      case Type.Damage:
-        player.attackDamage += (int)amount;
-        break;
-      case Type.Speed:
-        player.attackSpeed += amount;
-        break;
-      case Type.Health:
-        player.health += (int)amount;
-        break;
+      if (Input.GetButtonDown("A"))
+      {
+        Purchase(player);
+      }
     }
   }
 
-  void OnTriggerStay2D(Collider2D collider)
+  public void Purchase(Player player)
+  {
+    if (player.gold >= cost)
+    {
+      player.gold -= cost;
+      switch (type)
+      {
+        case Type.Damage:
+          player.attackDamage += (int)amount;
+          break;
+        case Type.Speed:
+          player.attackSpeed *= amount;
+          player.attackCooldown *= amount;
+          break;
+        case Type.Health:
+          player.health += (int)amount;
+          break;
+      }
+      Destroy(gameObject);
+    }
+  }
+
+  void OnTriggerEnter2D(Collider2D collider)
   {
     Player player = collider.GetComponent<Player>();
     if (player)
     {
+      this.player = player;
       player.canAttack = false;
-      if (Input.GetButtonDown("A"))
-      {
+    }
+  }
 
-      }
+  void OnTriggerExit2D(Collider2D collider)
+  {
+    Player player = collider.GetComponent<Player>();
+    if (player && player == this.player)
+    {
+      // this happens before player update ??
+      player.canAttack = true;
+      this.player = null;
     }
   }
 }

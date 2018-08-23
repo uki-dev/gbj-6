@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Game : MonoBehaviour
 {
+  public static Game instance;
+
   [System.Serializable]
   public struct Spawn
   {
@@ -13,6 +15,7 @@ public class Game : MonoBehaviour
 
   public int wave;
   public float waveTimer;
+  public int shopWave;
 
   public Spawn[] spawns;
 
@@ -33,18 +36,24 @@ public class Game : MonoBehaviour
     set
     {
       _shopping = value;
-      staircase.opened = value;
+      staircase.open = value;
     }
   }
+  [SerializeField]
   bool _shopping;
   public Staircase staircase;
+
+  void Awake()
+  {
+    instance = this;
+  }
 
   IEnumerator Start()
   {
     while (true)
     {
       yield return StartCoroutine(Wave());
-      if (wave > 0 && wave % 4 == 0)
+      if (wave > 0 && wave % shopWave == 0)
       {
         shopping = true;
         while (shopping)
@@ -66,7 +75,6 @@ public class Game : MonoBehaviour
     {
       Enemy enemy = Instantiate(RandomEnemy().gameObject).GetComponent<Enemy>();
       BoxCollider2D spawnArea = spawnAreas[Random.Range(0, spawnAreas.Length)];
-      // try to spawn somewhere in the area
       while (true)
       {
         Vector2 offset = new Vector2(spawnArea.size.x * Random.value, spawnArea.size.y * Random.value) - spawnArea.size * 0.5f;

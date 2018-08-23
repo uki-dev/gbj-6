@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class Player : Character
 {
+  public static Player instance;
+
   public int gold;
 
   List<Enemy> hits;
+
+  void Awake()
+  {
+    instance = this;
+  }
 
   protected override void Update()
   {

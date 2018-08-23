@@ -124,19 +124,15 @@ MonoBehaviour:
   attackDamage: 2
   attackSpeed: 1
   attackCooldown: 1
-  knockback: 16
+  knockback: 8
   walking: 0
   direction: {x: 0, y: 0}
   attacking: 0
   canAttack: 1
   target: {fileID: 0}
   range: 0
-  gold: {fileID: 1240033192982984, guid: 4aba463a7ea83cf45947488bd8658f76, type: 2}
-  bones:
-  - {fileID: 1913133860875858, guid: a6a405214c2b5f544b59b365aa9275d1, type: 2}
-  - {fileID: 1156290405546358, guid: 7e0dd285b45283345b51d77656c5940d, type: 2}
-  - {fileID: 1737298091377910, guid: 2d5eab549b794f64f8371169451cf44a, type: 2}
-  - {fileID: 1201702523020732, guid: 293bfbdd3562c664c87fcfc560d17c48, type: 2}
+  goldAmount: 1
+  goldPrefab: {fileID: 1240033192982984, guid: 4aba463a7ea83cf45947488bd8658f76, type: 2}
 --- !u!212 &212344216647149130
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -152,7 +148,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 191512286a351c24199b8dc7da9e331f, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

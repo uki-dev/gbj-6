@@ -6,9 +6,9 @@ public class Dungeon : MonoBehaviour
 {
   void OnTriggerEnter2D(Collider2D collider)
   {
-    if (collider.gameObject.tag == "Player")
+    if (Game.instance && collider.tag == "Player")
     {
-      FindObjectOfType<Game>().shopping = false;
+      Game.instance.shopping = false;
     }
   }
 }
