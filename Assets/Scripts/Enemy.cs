@@ -11,10 +11,18 @@ public class Enemy : Character
   public int goldAmount;
   public GameObject goldPrefab;
 
+  public static List<Enemy> enemies = new List<Enemy>();
+
   protected override void Start()
   {
+    enemies.Add(this);
     target = Player.instance;
     base.Start();
+  }
+
+  void OnDestroy()
+  {
+    enemies.Remove(this);
   }
 
   protected override void Update()
@@ -46,11 +54,6 @@ public class Enemy : Character
     base.Die();
     if (goldAmount > 0 && goldPrefab)
     {
-      /*
-      SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
-      position.x += Mathf.Round((Random.value - 0.5f) * 8);
-      position.y -= spriteRenderer.bounds.extents.y - 2;
-      */
       Vector3 position = transform.position;
       GameObject goldObject = Instantiate(this.goldPrefab, position, Quaternion.identity);
       Gold gold = goldObject.GetComponent<Gold>();

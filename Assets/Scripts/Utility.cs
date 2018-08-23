@@ -6,8 +6,9 @@ public static class Utility
 {
   public static Vector2 Direction(Vector2 direction)
   {
+    const float degrees = 45f;
     float angle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg;
-    angle = Mathf.Round(angle / 45f) * 45f;
+    angle = Mathf.Round(angle / degrees) * degrees;
     Quaternion rotation = Quaternion.Euler(0f, 0f, -angle);
     return rotation * Vector2.up;
   }

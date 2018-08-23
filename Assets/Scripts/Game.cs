@@ -21,6 +21,8 @@ public class Game : MonoBehaviour
 
   public BoxCollider2D[] spawnAreas;
 
+  public GameObject spawnEffectPrefab;
+
   public int enemyCountBase;
   public int enemyCountMax;
   public float enemyCountScale;
@@ -52,7 +54,7 @@ public class Game : MonoBehaviour
   {
     while (true)
     {
-      yield return StartCoroutine(Wave());
+      yield return StartCoroutine(StartWave());
       if (wave > 0 && wave % shopWave == 0)
       {
         shopping = true;
@@ -65,7 +67,7 @@ public class Game : MonoBehaviour
     }
   }
 
-  IEnumerator Wave()
+  IEnumerator StartWave()
   {
     yield return new WaitForSeconds(waveTimer);
 
@@ -73,38 +75,27 @@ public class Game : MonoBehaviour
     Enemy[] enemies = new Enemy[enemyCount];
     for (int i = 0; i < enemyCount; i++)
     {
-      Enemy enemy = Instantiate(RandomEnemy().gameObject).GetComponent<Enemy>();
-      BoxCollider2D spawnArea = spawnAreas[Random.Range(0, spawnAreas.Length)];
-      while (true)
-      {
-        Vector2 offset = new Vector2(spawnArea.size.x * Random.value, spawnArea.size.y * Random.value) - spawnArea.size * 0.5f;
-        Vector3 position = spawnArea.transform.position + (Vector3)offset;
-        //position.x = Mathf.RoundToInt(position.x / 8) * 8;
-        //position.y = Mathf.RoundToInt(position.y / 8) * 8;
-        if (!Physics2D.OverlapBox((Vector2)position + new Vector2(4, -4), new Vector2(8, 8), 0f, ~LayerMask.GetMask("Ignore Raycast")))
-        {
-          enemy.transform.position = position;
-          break;
-        }
-      }
-      enemies[i] = enemy;
+      yield return StartCoroutine(SpawnEnemy());
     }
 
-    while (true)
+    while (Enemy.enemies.Count > 0)
     {
-      bool end = true;
-      foreach (Enemy enemy in enemies)
-      {
-        if (enemy) end = false;
-      }
-      if (end) break;
       yield return null;
     }
-    //yield return new WaitForSeconds(waveTimer);
   }
 
-  Enemy RandomEnemy()
+  IEnumerator SpawnEnemy()
   {
+    BoxCollider2D spawnArea = spawnAreas[Random.Range(0, spawnAreas.Length)];
+    Vector2 spawnPosition = spawnArea.transform.position;
+    spawnPosition.x += spawnArea.size.x * (Random.value - 0.5f);
+    spawnPosition.y += spawnArea.size.y * (Random.value - 0.5f);
+
+    GameObject spawnEffectObject = Instantiate(spawnEffectPrefab, spawnPosition, Quaternion.identity);
+    Animator spawnEffectAnimator = spawnEffectObject.GetComponent<Animator>();
+    yield return new WaitForSeconds(spawnEffectAnimator.GetCurrentAnimatorStateInfo(0).length);
+    Destroy(spawnEffectObject);
+
     float sum = 0;
     foreach (Spawn spawn in spawns)
     {
@@ -116,14 +107,14 @@ public class Game : MonoBehaviour
     {
       if (value <= spawn.probability)
       {
-        return spawn.enemy;
+        GameObject enemyObject = Instantiate(spawn.enemy.gameObject, spawnPosition, Quaternion.identity);
+        Enemy enemy = enemyObject.GetComponent<Enemy>();
+        break;
       }
       else
       {
         value -= spawn.probability;
       }
     }
-    return null;
   }
-
 }
