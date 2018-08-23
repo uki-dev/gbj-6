@@ -34,8 +34,8 @@ public class Upgrade : MonoBehaviour
           player.attackDamage += (int)amount;
           break;
         case Type.Speed:
-          player.attackSpeed *= amount;
-          player.attackCooldown *= amount;
+          player.attackSpeed -= amount;
+          player.attackCooldown -= amount;
           break;
         case Type.Health:
           player.health += (int)amount;

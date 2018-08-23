@@ -72,7 +72,6 @@ public class Game : MonoBehaviour
     yield return new WaitForSeconds(waveTimer);
 
     int enemyCount = Mathf.FloorToInt(enemyCountBase * Mathf.Pow(enemyCountScale, wave));
-    Enemy[] enemies = new Enemy[enemyCount];
     for (int i = 0; i < enemyCount; i++)
     {
       yield return StartCoroutine(SpawnEnemy());
@@ -108,7 +107,6 @@ public class Game : MonoBehaviour
       if (value <= spawn.probability)
       {
         GameObject enemyObject = Instantiate(spawn.enemy.gameObject, spawnPosition, Quaternion.identity);
-        Enemy enemy = enemyObject.GetComponent<Enemy>();
         break;
       }
       else
