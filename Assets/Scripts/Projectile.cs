@@ -12,6 +12,7 @@ public class Projectile : MonoBehaviour
     if (player)
     {
       player.Damage(damage);
+      Destroy(gameObject);
     }
   }
 }

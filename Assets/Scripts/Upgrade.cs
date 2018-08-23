@@ -41,7 +41,6 @@ public class Upgrade : MonoBehaviour
           player.health += (int)amount;
           break;
       }
-      Destroy(gameObject);
     }
   }
 
