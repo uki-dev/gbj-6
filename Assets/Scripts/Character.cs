@@ -19,7 +19,7 @@ public class Character : Entity
   [HideInInspector]
   public bool walking;
   [HideInInspector]
-  public Vector2 direction;
+  public Vector2 direction = Vector2.down;
 
   [HideInInspector]
   public bool attacking;
@@ -49,7 +49,9 @@ public class Character : Entity
     animator.SetFloat("Direction X", direction.x);
     animator.SetFloat("Direction Y", direction.y);
 
-    transform.localScale = new Vector3(direction.x > 0 ? 1f : -1f, 1f, 1f);
+    SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+    spriteRenderer.flipX = direction.x < 0;
+    //transform.localScale = new Vector3(direction.x > 0 ? 1f : -1f, 1f, 1f);
 
     base.Update();
   }
@@ -70,7 +72,7 @@ public class Character : Entity
     canAttack = true;
   }
 
-  public void Damage(int amount)
+  public virtual void Damage(int amount, GameObject initiator, float knockback)
   {
     health = Mathf.Clamp(health - amount, 0, healthMax);
     if (health == 0)
@@ -78,11 +80,12 @@ public class Character : Entity
       Die();
     }
 
-    if (amount > 0)
-    {
-      Animator animator = GetComponent<Animator>();
-      animator.SetTrigger("Damaged");
-    }
+    Animator animator = GetComponent<Animator>();
+    animator.SetTrigger("Damaged");
+
+    Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
+    Vector2 normal = (transform.position - initiator.transform.position).normalized;
+    rigidbody.MovePosition(rigidbody.position + normal * knockback);
   }
 
   protected virtual void Die()

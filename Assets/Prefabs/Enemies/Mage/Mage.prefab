@@ -120,17 +120,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 2
   healthMax: 1
-  walkSpeed: 64
+  walkSpeed: 32
   attackDamage: 1
   attackSpeed: 1
   attackCooldown: 5
   knockback: 0
+  invincibilityTime: 0.5
+  invincible: 0
   walking: 0
   direction: {x: 0, y: 0}
   attacking: 0
   canAttack: 1
   target: {fileID: 0}
-  range: 128
+  range: 64
   goldAmount: 1
   goldPrefab: {fileID: 1240033192982984, guid: 4aba463a7ea83cf45947488bd8658f76, type: 2}
   projectilePrefab: {fileID: 1146480523041486, guid: 7e1b924237660d246a710f2926af7f6e,

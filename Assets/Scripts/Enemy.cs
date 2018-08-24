@@ -61,15 +61,12 @@ public class Enemy : Character
     }
   }
 
-  void OnCollisionEnter2D(Collision2D collision)
+  void OnCollisionStay2D(Collision2D collision)
   {
     Player player = collision.collider.GetComponent<Player>();
     if (player)
     {
-      player.Damage(attackDamage);
-      Rigidbody2D rigidbody = player.GetComponent<Rigidbody2D>();
-      Vector2 normal = (player.transform.position - transform.position).normalized;
-      rigidbody.MovePosition(rigidbody.position + normal * knockback);
+      player.Damage(attackDamage, gameObject, knockback);
     }
   }
 }

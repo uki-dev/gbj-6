@@ -7,9 +7,15 @@ public class Player : Character
 {
   public static Player instance;
 
+  public BoxCollider2D attackHitbox;
+
+  public float invincibilityTime;
+  [HideInInspector]
+  public bool invincible;
+
   public int gold;
 
-  List<Enemy> hits;
+  private List<Enemy> hit = new List<Enemy>();
 
   void Awake()
   {
@@ -20,7 +26,6 @@ public class Player : Character
   {
     if (canAttack && Input.GetButtonDown("A"))
     {
-      hits = new List<Enemy>();
       StartCoroutine(Attack());
     }
 
@@ -38,24 +43,44 @@ public class Player : Character
     base.Update();
   }
 
+  protected override IEnumerator Attack()
+  {
+    hit.Clear();
+    attackHitbox.offset = direction * 16;
+    yield return StartCoroutine(base.Attack());
+  }
+
+  public override void Damage(int damage, GameObject initiator, float knockback)
+  {
+    if (!invincible)
+    {
+      base.Damage(damage, initiator, knockback);
+      StartCoroutine(Invincibility());
+    }
+  }
+
+  protected virtual IEnumerator Invincibility()
+  {
+    invincible = true;
+    yield return new WaitForSeconds(invincibilityTime);
+    invincible = false;
+  }
+
   protected override void Die()
   {
     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     base.Die();
   }
 
-  void OnTriggerEnter2D(Collider2D collider)
+  void OnTriggerStay2D(Collider2D collider)
   {
     if (attacking)
     {
       Enemy enemy = collider.GetComponent<Enemy>();
-      if (enemy && !hits.Contains(enemy))
+      if (enemy && !hit.Contains(enemy))
       {
-        enemy.Damage(attackDamage);
-        Rigidbody2D rigidbody = enemy.GetComponent<Rigidbody2D>();
-        Vector2 normal = (enemy.transform.position - transform.position).normalized;
-        rigidbody.MovePosition(rigidbody.position + normal * knockback);
-        hits.Add(enemy);
+        enemy.Damage(attackDamage, gameObject, knockback);
+        hit.Add(enemy);
       }
     }
   }

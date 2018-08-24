@@ -11,7 +11,7 @@ public class Projectile : MonoBehaviour
     Player player = collider.GetComponent<Player>();
     if (player)
     {
-      player.Damage(damage);
+      player.Damage(damage, gameObject, 0f);
       Destroy(gameObject);
     }
   }
