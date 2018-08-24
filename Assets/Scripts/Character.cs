@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class Character : Entity
 {
-  [HideInInspector]
   public int health;
   public int healthMax;
+
+  public bool dead
+  {
+    get
+    {
+      return health <= 0;
+    }
+  }
 
   public float walkSpeed;
 
@@ -16,8 +23,6 @@ public class Character : Entity
 
   public float knockback;
 
-  [HideInInspector]
-  public bool walking;
   [HideInInspector]
   public Vector2 direction = Vector2.down;
 
@@ -34,24 +39,16 @@ public class Character : Entity
   protected override void Update()
   {
     Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
-    if (walking)
-    {
-      rigidbody.velocity = direction * walkSpeed;
-    }
-    else
-    {
-      rigidbody.velocity = Vector2.zero;
-    }
 
     Animator animator = GetComponent<Animator>();
-    animator.SetBool("Walking", walking);
-    animator.SetFloat("Walk Speed", walkSpeed / 32);
+    animator.SetBool("Walking", rigidbody.velocity != Vector2.zero);
+    animator.SetFloat("Walk Speed", rigidbody.velocity.magnitude / 32);
     animator.SetFloat("Direction X", direction.x);
     animator.SetFloat("Direction Y", direction.y);
+    animator.SetBool("Dead", dead);
 
     SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
     spriteRenderer.flipX = direction.x < 0;
-    //transform.localScale = new Vector3(direction.x > 0 ? 1f : -1f, 1f, 1f);
 
     base.Update();
   }

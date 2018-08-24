@@ -5,7 +5,6 @@ using UnityEngine;
 public class Enemy : Character
 {
   [HideInInspector]
-  public Player target;
   public float range;
 
   public int goldAmount;
@@ -16,7 +15,6 @@ public class Enemy : Character
   protected override void Start()
   {
     enemies.Add(this);
-    target = Player.instance;
     base.Start();
   }
 
@@ -27,14 +25,15 @@ public class Enemy : Character
 
   protected override void Update()
   {
-    walking = false;
-    if (target)
+    Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
+    rigidbody.velocity = Vector2.zero;
+    if (Player.instance && !Player.instance.dead)
     {
-      if (Vector3.Distance(transform.position, target.transform.position) > range)
+      if (Vector3.Distance(transform.position, Player.instance.transform.position) > range)
       {
-        Vector2 normal = (target.transform.position - transform.position).normalized;
+        Vector2 normal = (Player.instance.transform.position - transform.position).normalized;
         direction = Utility.Direction(normal);
-        walking = true;
+        rigidbody.velocity = direction * walkSpeed;
       }
       else if (canAttack)
       {

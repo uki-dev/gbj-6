@@ -11,7 +11,7 @@ public class RangedEnemy : Enemy
   {
     if (projectilePrefab)
     {
-      Vector2 normal = (target.transform.position - transform.position).normalized;
+      Vector2 normal = (Player.instance.transform.position - transform.position).normalized;
       Vector2 direction = Utility.Direction(normal);
       GameObject projectileObject = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
       projectileObject.tag = gameObject.tag;

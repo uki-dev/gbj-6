@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Player : Character
 {
   public static Player instance;
+
+  public float dashSpeed;
+  public float dashCooldown;
+  float nextDash;
 
   public BoxCollider2D attackHitbox;
 
@@ -24,20 +27,31 @@ public class Player : Character
 
   protected override void Update()
   {
-    if (canAttack && Input.GetButtonDown("A"))
+    Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
+    rigidbody.velocity = Vector2.zero;
+    if (!dead)
     {
-      StartCoroutine(Attack());
-    }
-
-    walking = false;
-    if (!attacking)
-    {
-      Vector2 direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-      direction = Utility.Direction(direction.normalized);
-      if (direction != Vector2.zero)
+      if (canAttack && Input.GetButtonDown("A"))
       {
-        this.direction = direction;
-        walking = true;
+        StartCoroutine(Attack());
+      }
+      if (!attacking)
+      {
+        Vector2 direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        direction = Utility.Direction(direction.normalized);
+        if (direction != Vector2.zero)
+        {
+          if (Input.GetButtonDown("B") && Time.time > nextDash)
+          {
+            rigidbody.MovePosition(rigidbody.position + direction * dashSpeed);
+            nextDash = Time.time + dashCooldown;
+          }
+          else
+          {
+            rigidbody.velocity = direction * walkSpeed;
+          }
+          this.direction = direction;
+        }
       }
     }
     base.Update();
@@ -46,7 +60,7 @@ public class Player : Character
   protected override IEnumerator Attack()
   {
     hit.Clear();
-    attackHitbox.offset = direction * 16;
+    attackHitbox.offset = direction * attackHitbox.size;
     yield return StartCoroutine(base.Attack());
   }
 
@@ -68,8 +82,7 @@ public class Player : Character
 
   protected override void Die()
   {
-    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    base.Die();
+    Game.instance.GameOver();
   }
 
   void OnTriggerStay2D(Collider2D collider)

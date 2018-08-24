@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Game : MonoBehaviour
 {
@@ -28,6 +29,8 @@ public class Game : MonoBehaviour
   public float enemyCountScale;
   public float enemyHealthScale;
   public float enemyDamageScale;
+
+  public float gameOverTime;
 
   public bool shopping
   {
@@ -114,5 +117,26 @@ public class Game : MonoBehaviour
         value -= spawn.probability;
       }
     }
+  }
+
+  public void GameOver()
+  {
+    StopAllCoroutines();
+    StartCoroutine(IGameOver());
+  }
+
+  IEnumerator IGameOver()
+  {
+    for (int i = Enemy.enemies.Count - 1; i >= 0; i--)
+    {
+      Enemy enemy = Enemy.enemies[i];
+      Destroy(enemy.gameObject);
+      GameObject spawnEffectObject = Instantiate(spawnEffectPrefab, enemy.transform.position, Quaternion.identity);
+      Animator spawnEffectAnimator = spawnEffectObject.GetComponent<Animator>();
+      yield return new WaitForSeconds(spawnEffectAnimator.GetCurrentAnimatorStateInfo(0).length);
+      Destroy(spawnEffectObject);
+    }
+    yield return new WaitForSeconds(gameOverTime);
+    SceneManager.LoadScene("Title");
   }
 }

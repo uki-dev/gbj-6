@@ -60,9 +60,9 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &61609852286827892
 BoxCollider2D:
@@ -125,13 +125,9 @@ MonoBehaviour:
   attackSpeed: 1
   attackCooldown: 1
   knockback: 16
-  invincibilityTime: 0.25
-  invincible: 0
-  walking: 0
   direction: {x: 0, y: 0}
   attacking: 0
   canAttack: 1
-  target: {fileID: 0}
   range: 0
   goldAmount: 3
   goldPrefab: {fileID: 1240033192982984, guid: 4aba463a7ea83cf45947488bd8658f76, type: 2}
