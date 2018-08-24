@@ -33,7 +33,14 @@ public class Gold : MonoBehaviour
     if (player)
     {
       player.gold += amount;
-      Destroy(gameObject);
+      AudioSource audioSource = GetComponent<AudioSource>();
+      audioSource.Play();
+
+      Destroy(GetComponent<Renderer>());
+      Destroy(GetComponent<Collider2D>());
+      Destroy(gameObject, audioSource.clip.length);
+
+      enabled = false;
     }
   }
 }

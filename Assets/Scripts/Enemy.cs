@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Enemy : Character
 {
-  [HideInInspector]
-  public float range;
+  public int collisionDamage;
 
   public int goldAmount;
   public GameObject goldPrefab;
@@ -23,35 +22,21 @@ public class Enemy : Character
     enemies.Remove(this);
   }
 
-  protected override void Update()
+  public override void Damage(int amount, GameObject initiator, float knockback)
   {
-    Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
-    rigidbody.velocity = Vector2.zero;
-    if (Player.instance && !Player.instance.dead)
-    {
-      if (Vector3.Distance(transform.position, Player.instance.transform.position) > range)
-      {
-        Vector2 normal = (Player.instance.transform.position - transform.position).normalized;
-        direction = Utility.Direction(normal);
-        rigidbody.velocity = direction * walkSpeed;
-      }
-      else if (canAttack)
-      {
-        StartCoroutine(Attack());
-      }
-    }
-    else
-    {
-      Animator animator = GetComponent<Animator>();
-      animator.StopPlayback();
-    }
-    base.Update();
+    GetComponent<AudioSource>().Play();
+    base.Damage(amount, initiator, knockback);
   }
 
   protected override void Die()
   {
-    base.Die();
-    if (goldAmount > 0 && goldPrefab)
+    AudioSource audioSource = GetComponent<AudioSource>();
+    Destroy(GetComponent<Collider2D>());
+    Destroy(GetComponent<Rigidbody2D>());
+    Destroy(gameObject, audioSource.clip.length);
+    enabled = false;
+
+    if (goldAmount > 0)
     {
       Vector3 position = transform.position;
       GameObject goldObject = Instantiate(this.goldPrefab, position, Quaternion.identity);
@@ -65,7 +50,7 @@ public class Enemy : Character
     Player player = collision.collider.GetComponent<Player>();
     if (player)
     {
-      player.Damage(attackDamage, gameObject, knockback);
+      player.Damage(collisionDamage, gameObject, knockback);
     }
   }
 }

@@ -6,17 +6,24 @@ public class Player : Character
 {
   public static Player instance;
 
+  public int attackDamage;
+  public float attackSpeed;
+  public float attackCooldown;
+  public BoxCollider2D attackHitbox;
+
   public float dashSpeed;
   public float dashCooldown;
   float nextDash;
-
-  public BoxCollider2D attackHitbox;
 
   public float invincibilityTime;
   [HideInInspector]
   public bool invincible;
 
   public int gold;
+
+  public AudioSource dashSound;
+  public AudioSource damagedSound;
+  public AudioSource deathSound;
 
   private List<Enemy> hit = new List<Enemy>();
 
@@ -45,6 +52,7 @@ public class Player : Character
           {
             rigidbody.MovePosition(rigidbody.position + direction * dashSpeed);
             nextDash = Time.time + dashCooldown;
+            dashSound.Play();
           }
           else
           {
@@ -57,18 +65,30 @@ public class Player : Character
     base.Update();
   }
 
-  protected override IEnumerator Attack()
+  IEnumerator Attack()
   {
-    hit.Clear();
+    Animator animator = GetComponent<Animator>();
+    animator.SetFloat("Attack Speed", 1f / attackSpeed);
+    animator.SetTrigger("Attacking");
+
+    attacking = true;
+    canAttack = false;
     attackHitbox.offset = direction * attackHitbox.size;
-    yield return StartCoroutine(base.Attack());
+    hit.Clear();
+
+    yield return new WaitForSeconds(attackSpeed);
+    attacking = false;
+
+    yield return new WaitForSeconds(attackCooldown - attackSpeed);
+    canAttack = true;
   }
 
-  public override void Damage(int damage, GameObject initiator, float knockback)
+  public override void Damage(int amount, GameObject initiator, float knockback)
   {
-    if (!invincible)
+    if (amount > 0 && !invincible)
     {
-      base.Damage(damage, initiator, knockback);
+      base.Damage(amount, initiator, knockback);
+      damagedSound.Play();
       StartCoroutine(Invincibility());
     }
   }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Character : Entity
 {
+  [HideInInspector]
   public int health;
   public int healthMax;
 
@@ -16,10 +17,6 @@ public class Character : Entity
   }
 
   public float walkSpeed;
-
-  public int attackDamage;
-  public float attackSpeed;
-  public float attackCooldown;
 
   public float knockback;
 
@@ -34,6 +31,7 @@ public class Character : Entity
   protected virtual void Start()
   {
     health = healthMax;
+    GetComponent<Rigidbody2D>().freezeRotation = true;
   }
 
   protected override void Update()
@@ -53,36 +51,23 @@ public class Character : Entity
     base.Update();
   }
 
-  protected virtual IEnumerator Attack()
-  {
-    Animator animator = GetComponent<Animator>();
-    animator.SetFloat("Attack Speed", 1f / attackSpeed);
-    animator.SetTrigger("Attacking");
-
-    attacking = true;
-    canAttack = false;
-
-    yield return new WaitForSeconds(attackSpeed);
-    attacking = false;
-
-    yield return new WaitForSeconds(attackCooldown - attackSpeed);
-    canAttack = true;
-  }
-
   public virtual void Damage(int amount, GameObject initiator, float knockback)
   {
-    health = Mathf.Clamp(health - amount, 0, healthMax);
-    if (health == 0)
+    if (amount > 0)
     {
-      Die();
+      health = Mathf.Clamp(health - amount, 0, healthMax);
+      if (health == 0)
+      {
+        Die();
+      }
+
+      Animator animator = GetComponent<Animator>();
+      animator.SetTrigger("Damaged");
+
+      Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
+      Vector2 normal = (transform.position - initiator.transform.position).normalized;
+      rigidbody.MovePosition(rigidbody.position + normal * knockback);
     }
-
-    Animator animator = GetComponent<Animator>();
-    animator.SetTrigger("Damaged");
-
-    Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
-    Vector2 normal = (transform.position - initiator.transform.position).normalized;
-    rigidbody.MovePosition(rigidbody.position + normal * knockback);
   }
 
   protected virtual void Die()

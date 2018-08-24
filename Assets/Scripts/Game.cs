@@ -20,7 +20,8 @@ public class Game : MonoBehaviour
 
   public Spawn[] spawns;
 
-  public BoxCollider2D[] spawnAreas;
+  public BoxCollider2D spawnArea;
+  public int spawnRange;
 
   public GameObject spawnEffectPrefab;
 
@@ -74,10 +75,10 @@ public class Game : MonoBehaviour
   {
     yield return new WaitForSeconds(waveTimer);
 
-    int enemyCount = Mathf.FloorToInt(enemyCountBase * Mathf.Pow(enemyCountScale, wave));
+    int enemyCount = Mathf.Clamp(Mathf.FloorToInt(enemyCountBase * Mathf.Pow(enemyCountScale, wave)), 0, enemyCountMax);
     for (int i = 0; i < enemyCount; i++)
     {
-      yield return StartCoroutine(SpawnEnemy());
+      yield return StartCoroutine(StartSpawn());
     }
 
     while (Enemy.enemies.Count > 0)
@@ -86,12 +87,20 @@ public class Game : MonoBehaviour
     }
   }
 
-  IEnumerator SpawnEnemy()
+  IEnumerator StartSpawn()
   {
-    BoxCollider2D spawnArea = spawnAreas[Random.Range(0, spawnAreas.Length)];
-    Vector2 spawnPosition = spawnArea.transform.position;
-    spawnPosition.x += spawnArea.size.x * (Random.value - 0.5f);
-    spawnPosition.y += spawnArea.size.y * (Random.value - 0.5f);
+    Vector2 spawnPosition;
+    while (true)
+    {
+      spawnPosition = spawnArea.transform.position; ;
+      spawnPosition.x += spawnArea.size.x * (Random.value - 0.5f);
+      spawnPosition.y += spawnArea.size.y * (Random.value - 0.5f);
+      if (Vector2.Distance(spawnPosition, Player.instance.transform.position) >= spawnRange)
+      {
+
+        break;
+      }
+    }
 
     GameObject spawnEffectObject = Instantiate(spawnEffectPrefab, spawnPosition, Quaternion.identity);
     Animator spawnEffectAnimator = spawnEffectObject.GetComponent<Animator>();
@@ -109,13 +118,27 @@ public class Game : MonoBehaviour
     {
       if (value <= spawn.probability)
       {
-        GameObject enemyObject = Instantiate(spawn.enemy.gameObject, spawnPosition, Quaternion.identity);
+        SpawnEnemy(spawn.enemy.gameObject, spawnPosition);
         break;
       }
       else
       {
         value -= spawn.probability;
       }
+    }
+  }
+
+  void SpawnEnemy(GameObject prefab, Vector2 position)
+  {
+    GameObject enemyObject = Instantiate(prefab, position, Quaternion.identity);
+    Enemy enemy = enemyObject.GetComponent<Enemy>();
+    enemy.healthMax = Mathf.FloorToInt(enemy.healthMax * Mathf.Pow(enemyHealthScale, wave));
+    enemy.health = enemy.healthMax;
+    enemy.collisionDamage = Mathf.FloorToInt(enemy.collisionDamage * Mathf.Pow(enemyDamageScale, wave));
+    if (enemy.GetType() == typeof(RangedEnemy))
+    {
+      RangedEnemy rangedEnemy = (RangedEnemy)enemy;
+      rangedEnemy.projectileDamage = Mathf.FloorToInt(rangedEnemy.projectileDamage * Mathf.Pow(enemyDamageScale, wave));
     }
   }
 

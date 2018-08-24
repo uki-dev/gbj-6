@@ -31,6 +31,7 @@ public class Item : MonoBehaviour
       switch (type)
       {
         case Type.Health:
+          player.healthMax += (int)amount;
           player.health += (int)amount;
           break;
         case Type.Damage:
@@ -44,6 +45,7 @@ public class Item : MonoBehaviour
           player.health = player.healthMax;
           break;
       }
+      GetComponent<AudioSource>().Play();
     }
   }
 

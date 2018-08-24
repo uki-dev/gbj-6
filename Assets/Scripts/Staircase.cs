@@ -7,6 +7,8 @@ public class Staircase : MonoBehaviour
   [SerializeField]
   private bool _open;
 
+  public bool shop;
+
   public Sprite opened;
   public Sprite closed;
 
@@ -43,6 +45,10 @@ public class Staircase : MonoBehaviour
         cameraPosition.y = exitRoom.position.y;
         Camera.main.transform.position = cameraPosition;
         player.transform.position = exit.transform.position;
+        if (shop)
+        {
+          Game.instance.shopping = false;
+        }
       }
     }
   }
