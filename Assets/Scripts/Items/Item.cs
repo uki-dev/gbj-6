@@ -35,11 +35,11 @@ public class Item : MonoBehaviour
           player.health += (int)amount;
           break;
         case Type.Damage:
-          player.attackDamage += (int)amount;
+          player.attackDamage = (int)amount;
           break;
         case Type.Speed:
-          player.attackSpeed -= amount;
-          player.attackCooldown -= amount;
+          player.attackSpeed *= 1f - amount;
+          player.attackCooldown *= 1f - amount;
           break;
         case Type.Potion:
           player.health = player.healthMax;
