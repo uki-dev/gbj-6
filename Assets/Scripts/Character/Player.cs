@@ -40,6 +40,7 @@ public class Player : Character
 
   protected override void Update()
   {
+    Animator animator = GetComponent<Animator>();
     Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
     rigidbody.velocity = Vector2.zero;
     if (!dead)
@@ -58,6 +59,7 @@ public class Player : Character
           {
             rigidbody.MovePosition(rigidbody.position + direction * dashSpeed);
             nextDash = Time.time + dashCooldown;
+            animator.SetTrigger("Dash");
             dashSound.Play();
           }
           else
@@ -83,7 +85,11 @@ public class Player : Character
 
     attacking = true;
     canAttack = false;
-    attackHitbox.offset = direction * attackHitbox.size;
+    attackHitbox.offset = direction * 8;
+    Vector2 size = Vector2.zero;
+    size.x = 16 + Mathf.Abs(direction.x) * 8;
+    size.y = 16 + Mathf.Abs(direction.y) * 8;
+    attackHitbox.size = size;
     hit.Clear();
 
     yield return new WaitForSeconds(attackSpeed);
