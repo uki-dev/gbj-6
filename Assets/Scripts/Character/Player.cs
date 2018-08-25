@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : Character
 {
   public static Player instance;
+
+  public RectTransform healthBar;
 
   public int attackDamage;
   public float attackSpeed;
@@ -21,6 +24,9 @@ public class Player : Character
 
   public int gold;
 
+  public Text goldText;
+
+  public AudioSource attackSound;
   public AudioSource dashSound;
   public AudioSource damagedSound;
   public AudioSource deathSound;
@@ -62,6 +68,8 @@ public class Player : Character
         }
       }
     }
+    goldText.text = Player.instance.gold.ToString();
+    healthBar.localScale = new Vector2((float)Player.instance.health / Player.instance.healthMax, 1f);
     base.Update();
   }
 
@@ -70,6 +78,8 @@ public class Player : Character
     Animator animator = GetComponent<Animator>();
     animator.SetFloat("Attack Speed", 1f / attackSpeed);
     animator.SetTrigger("Attacking");
+
+    attackSound.Play();
 
     attacking = true;
     canAttack = false;

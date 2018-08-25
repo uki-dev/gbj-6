@@ -2,8 +2,9 @@ fileFormatVersion: 2
 guid: e4eb2dfb62089e54b9bf4b1bff5e2cb1
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Staircase Opened
-    21300002: Staircase Closed
+    21300000: Staircase Up Opened
+    21300002: Staircase Up Closed
+    21300004: Staircase Down
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -97,11 +98,11 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Staircase Opened
+      name: Staircase Up Opened
       rect:
         serializedVersion: 2
         x: 0
-        y: 16
+        y: 32
         width: 32
         height: 16
       alignment: 0
@@ -117,11 +118,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Staircase Closed
+      name: Staircase Up Closed
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 16
         width: 32
         height: 16
       alignment: 0
@@ -132,6 +133,26 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: fdbc1f4f04f503947979652043e91411
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Staircase Down
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0359290e8b7bfd04d92702463ac0b436
       vertices: []
       indices: 
       edges: []

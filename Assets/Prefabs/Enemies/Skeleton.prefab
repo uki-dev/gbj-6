@@ -23,8 +23,8 @@ GameObject:
   - component: {fileID: 50347784927905460}
   - component: {fileID: 61296775910169334}
   - component: {fileID: 95580067719565824}
-  - component: {fileID: 82292799903310760}
   - component: {fileID: 114792596281082928}
+  - component: {fileID: 82292799903310760}
   m_Layer: 0
   m_Name: Skeleton
   m_TagString: Enemy
@@ -216,7 +216,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 0
   healthMax: 1
-  walkSpeed: 64
+  walkSpeed: 56
   knockback: 4
   direction: {x: 0, y: -1}
   attacking: 0
@@ -224,6 +224,7 @@ MonoBehaviour:
   collisionDamage: 1
   goldAmount: 0
   goldPrefab: {fileID: 1240033192982984, guid: 4aba463a7ea83cf45947488bd8658f76, type: 2}
+  damagedSound: {fileID: 82292799903310760}
 --- !u!212 &212672621662681280
 SpriteRenderer:
   m_ObjectHideFlags: 1

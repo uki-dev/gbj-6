@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Game : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class Game : MonoBehaviour
   public int wave;
   public float waveTimer;
   public int shopWave;
+  public Text waveText;
 
   public Spawn[] spawns;
 
@@ -32,6 +34,7 @@ public class Game : MonoBehaviour
   public float enemyDamageScale;
 
   public float gameOverTime;
+  public RectTransform gameOverText;
 
   public bool shopping
   {
@@ -69,6 +72,11 @@ public class Game : MonoBehaviour
       }
       wave++;
     }
+  }
+
+  void Update()
+  {
+    waveText.text = "Wave " + Game.instance.wave;
   }
 
   IEnumerator StartWave()
@@ -150,6 +158,14 @@ public class Game : MonoBehaviour
 
   IEnumerator IGameOver()
   {
+    gameOverText.gameObject.SetActive(true);
+    StartCoroutine(DespawnEnemies());
+    yield return new WaitForSeconds(gameOverTime);
+    SceneManager.LoadScene("Title");
+  }
+
+  IEnumerator DespawnEnemies()
+  {
     for (int i = Enemy.enemies.Count - 1; i >= 0; i--)
     {
       Enemy enemy = Enemy.enemies[i];
@@ -159,7 +175,5 @@ public class Game : MonoBehaviour
       yield return new WaitForSeconds(spawnEffectAnimator.GetCurrentAnimatorStateInfo(0).length);
       Destroy(spawnEffectObject);
     }
-    yield return new WaitForSeconds(gameOverTime);
-    SceneManager.LoadScene("Title");
   }
 }

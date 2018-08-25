@@ -224,6 +224,7 @@ MonoBehaviour:
   collisionDamage: 1
   goldAmount: 1
   goldPrefab: {fileID: 1240033192982984, guid: 4aba463a7ea83cf45947488bd8658f76, type: 2}
+  damagedSound: {fileID: 82489200858195778}
 --- !u!212 &212344216647149130
 SpriteRenderer:
   m_ObjectHideFlags: 1

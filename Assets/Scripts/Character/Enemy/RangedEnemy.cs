@@ -15,6 +15,8 @@ public class RangedEnemy : Enemy
   public float projectileKnockback;
   public GameObject projectilePrefab;
 
+  public AudioSource projectileSound;
+
   float nextProjectile;
 
   protected override void Update()
@@ -46,6 +48,7 @@ public class RangedEnemy : Enemy
         {
           SpawnProjectile(angle);
         }
+        projectileSound.Play();
         nextProjectile = Time.time + projectileCooldown;
       }
     }
