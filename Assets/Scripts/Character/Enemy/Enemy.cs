@@ -9,7 +9,7 @@ public class Enemy : Character
   public int goldAmount;
   public GameObject goldPrefab;
 
-  public AudioSource damagedSound;
+  public AudioClip damagedSound;
 
   public static List<Enemy> enemies = new List<Enemy>();
 
@@ -26,7 +26,7 @@ public class Enemy : Character
 
   public override void Damage(int amount, GameObject initiator, float knockback)
   {
-    damagedSound.Play();
+    AudioSource.PlayClipAtPoint(damagedSound, Camera.main.transform.position);
     base.Damage(amount, initiator, knockback);
   }
 
@@ -34,8 +34,10 @@ public class Enemy : Character
   {
     Destroy(GetComponent<Collider2D>());
     Destroy(GetComponent<Rigidbody2D>());
-    Destroy(gameObject, damagedSound.clip.length);
+    Destroy(gameObject, damagedSound.length);
     enabled = false;
+
+    AudioSource.PlayClipAtPoint(damagedSound, Camera.main.transform.position);
 
     if (goldAmount > 0)
     {

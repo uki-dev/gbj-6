@@ -7,6 +7,8 @@ public class Gold : MonoBehaviour
   public Sprite small;
   public Sprite large;
 
+  public AudioClip pickupSound;
+
   public int amount
   {
     get
@@ -33,14 +35,8 @@ public class Gold : MonoBehaviour
     if (player)
     {
       player.gold += amount;
-      AudioSource audioSource = GetComponent<AudioSource>();
-      audioSource.Play();
-
-      Destroy(GetComponent<Renderer>());
-      Destroy(GetComponent<Collider2D>());
-      Destroy(gameObject, audioSource.clip.length);
-
-      enabled = false;
+      AudioSource.PlayClipAtPoint(pickupSound, Camera.main.transform.position);
+      Destroy(gameObject);
     }
   }
 }
